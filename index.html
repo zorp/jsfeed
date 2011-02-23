@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <title>FEED ME!</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/feeds.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        jQuery(document).ready(function($) {
+
+            var flickr  = "1447107@N23";
+            var twitter = "verdensskove"
+
+            feeds.get('flickr', flickr, function(data) {
+                $.each(data.data.items, function(key, value) {
+                    if(key === 4) {
+                        return false;
+                    }
+                    var tpl = template.render(template.flickr, value);
+                    $(tpl).appendTo('#flickr .content');
+                });
+            }, 'group');
+
+            feeds.get('twitter', 'ranza', function(data) {
+                $.each(data.data, function(key, value) {
+                    if(key === 4) {
+                        return false;
+                    }
+                    var tpl = template.render(template.twitter, value);
+                    $(tpl).appendTo('#twitter .content');
+                });
+            });
+
+        });
+    </script>
+
+    <style type="text/css" media="screen">
+        body {
+            background-color: #ffffff;
+        }
+        h1 {
+            color: #FFFBA3;
+        }
+        #flickr {
+            background-color: #FF8383;
+        }
+        #twitter {
+            background-color: #00DEEF;
+        }
+            #twitter .tweet {
+                padding: 10px;
+            }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="flickr">
+            <h1>Flickr</h1>
+            <div class="content"></div>
+        </div>
+        <div id="twitter">
+            <h1>Twitter</h1>
+            <div class="content"></div>
+        </div>
+    </div>
+    <div class="loader">A loader placeholder</div>
+
+</body>
+</html>

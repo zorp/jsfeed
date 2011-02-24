@@ -3,6 +3,7 @@ var template = {
         <div class="tweet"> \
             <div class="date">{{created_at}}</div> \
             <div class="message">{{text}}</div> \
+            <div class="link"><a href="http://twitter.com/{{user}}/status/{{id_str}}">link</a></div> \
         </div>',
     flickr: '\
         <div class="image"> \
@@ -11,12 +12,16 @@ var template = {
         </div>',
     render: function(template, data) {
         var tpl = template;
+        console.log(data);
         $.each(data, function(key, value) {
             if(key == 'media') {
                 value = value.m;
             }
             if(key == 'created_at') {
                 value = prettyDate(value);
+            }
+            if(key == 'user') {
+                value = value.screen_name
             }
             tpl = tpl.replace('{{' + key + '}}', value);
         });
